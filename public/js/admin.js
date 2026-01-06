@@ -10,6 +10,9 @@ const socket = io();
 const connectionStatus = document.getElementById('connectionStatus');
 const boardCountSelect = document.getElementById('boardCount');
 const boardSizeSelect = document.getElementById('boardSize');
+const numberRangeMinInput = document.getElementById('numberRangeMin');
+const numberRangeMaxInput = document.getElementById('numberRangeMax');
+const rangeInfo = document.getElementById('rangeInfo');
 const newGameBtn = document.getElementById('newGameBtn');
 const numberInput = document.getElementById('numberInput');
 const callBtn = document.getElementById('callBtn');
@@ -71,11 +74,25 @@ function updateUI() {
     // Update selects to match current state
     boardCountSelect.value = gameState.boardCount;
     boardSizeSelect.value = gameState.boardSize;
+    numberRangeMinInput.value = gameState.numberRangeMin;
+    numberRangeMaxInput.value = gameState.numberRangeMax;
+    
+    // Update range info display
+    updateRangeInfo();
     
     // Update called numbers display
     updateCalledHistory();
     updateLastCalled();
     updateBoardsPreview();
+}
+
+/**
+ * Update range info display
+ */
+function updateRangeInfo() {
+    const min = numberRangeMinInput.value;
+    const max = numberRangeMaxInput.value;
+    rangeInfo.innerHTML = `Numbers will be between <strong>${min}</strong> and <strong>${max}</strong>`;
 }
 
 /**
@@ -206,14 +223,36 @@ function undoLastNumber() {
 function startNewGame() {
     const boardCount = parseInt(boardCountSelect.value);
     const boardSize = parseInt(boardSizeSelect.value);
+    const numberRangeMin = parseInt(numberRangeMinInput.value) || 1;
+    const numberRangeMax = parseInt(numberRangeMaxInput.value) || 75;
+    
+    // Validate range
+    if (numberRangeMin >= numberRangeMax) {
+        showNotification('Min range must be less than max range', 'error');
+        return;
+    }
+    
+    if (numberRangeMin < 1) {
+        showNotification('Min range must be at least 1', 'error');
+        return;
+    }
+    
+    const rangeSize = numberRangeMax - numberRangeMin + 1;
+    const cellsNeeded = boardSize * boardSize * boardCount;
+    
+    if (rangeSize < cellsNeeded) {
+        showNotification(`Warning: Range (${rangeSize} numbers) is smaller than total cells (${cellsNeeded}). Some numbers may repeat.`, 'warning');
+    }
     
     showConfirmModal(
         'Start New Game',
-        `Start a new game with ${boardCount} board(s) of size ${boardSize}x${boardSize}? This will clear all current progress.`,
+        `Start a new game with ${boardCount} board(s) of size ${boardSize}x${boardSize}? Numbers will range from ${numberRangeMin} to ${numberRangeMax}. This will clear all current progress.`,
         () => {
             socket.emit('newGame', {
                 boardCount: boardCount,
-                boardSize: boardSize
+                boardSize: boardSize,
+                numberRangeMin: numberRangeMin,
+                numberRangeMax: numberRangeMax
             });
         }
     );
@@ -309,6 +348,10 @@ numberInput.addEventListener('keypress', (e) => {
 undoBtn.addEventListener('click', undoLastNumber);
 
 newGameBtn.addEventListener('click', startNewGame);
+
+// Update range info when inputs change
+numberRangeMinInput.addEventListener('input', updateRangeInfo);
+numberRangeMaxInput.addEventListener('input', updateRangeInfo);
 
 modalCancel.addEventListener('click', hideConfirmModal);
 

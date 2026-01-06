@@ -14,6 +14,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 let gameState = {
     boardCount: 2,
     boardSize: 5,
+    numberRangeMin: 1,
+    numberRangeMax: 75,
     calledNumbers: [],
     boards: [],
     winners: []
@@ -22,8 +24,16 @@ let gameState = {
 // Generate a random bingo board
 function generateBoard(size) {
     const board = [];
-    const maxNumber = size * size * 3; // Ensures enough range for the board
+    const minNum = gameState.numberRangeMin;
+    const maxNum = gameState.numberRangeMax;
+    const range = maxNum - minNum + 1;
     const usedNumbers = new Set();
+    
+    // Calculate how many numbers we need (accounting for free space)
+    const cellsNeeded = size % 2 === 1 ? (size * size) - 1 : size * size;
+    
+    // If range is smaller than cells needed, we'll allow duplicates across boards
+    // but not within the same board
     
     for (let row = 0; row < size; row++) {
         const rowNumbers = [];
@@ -33,9 +43,15 @@ function generateBoard(size) {
                 rowNumbers.push({ number: 'FREE', stamped: true });
             } else {
                 let num;
+                let attempts = 0;
                 do {
-                    num = Math.floor(Math.random() * maxNumber) + 1;
-                } while (usedNumbers.has(num));
+                    num = Math.floor(Math.random() * range) + minNum;
+                    attempts++;
+                    // If we've tried too many times (range too small), allow duplicates
+                    if (attempts > range * 2) {
+                        break;
+                    }
+                } while (usedNumbers.has(num) && usedNumbers.size < range);
                 usedNumbers.add(num);
                 rowNumbers.push({ number: num, stamped: false });
             }
@@ -175,6 +191,8 @@ io.on('connection', (socket) => {
         if (settings) {
             gameState.boardCount = settings.boardCount || gameState.boardCount;
             gameState.boardSize = settings.boardSize || gameState.boardSize;
+            gameState.numberRangeMin = settings.numberRangeMin || gameState.numberRangeMin;
+            gameState.numberRangeMax = settings.numberRangeMax || gameState.numberRangeMax;
         }
         generateAllBoards();
         io.emit('gameState', gameState);
@@ -185,6 +203,8 @@ io.on('connection', (socket) => {
     socket.on('updateSettings', (settings) => {
         gameState.boardCount = settings.boardCount || gameState.boardCount;
         gameState.boardSize = settings.boardSize || gameState.boardSize;
+        gameState.numberRangeMin = settings.numberRangeMin || gameState.numberRangeMin;
+        gameState.numberRangeMax = settings.numberRangeMax || gameState.numberRangeMax;
         generateAllBoards();
         io.emit('gameState', gameState);
     });

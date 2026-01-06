@@ -46,6 +46,17 @@
                             <option value="10">10 x 10</option>
                         </select>
                     </div>
+                    <div class="setting-group">
+                        <label for="numberRangeMin">Number Range (Min):</label>
+                        <input type="number" id="numberRangeMin" value="1" min="1" max="999">
+                    </div>
+                    <div class="setting-group">
+                        <label for="numberRangeMax">Number Range (Max):</label>
+                        <input type="number" id="numberRangeMax" value="75" min="1" max="999">
+                    </div>
+                </div>
+                <div class="range-info" id="rangeInfo">
+                    Numbers will be between <strong>1</strong> and <strong>75</strong>
                 </div>
                 <div class="button-group">
                     <button class="btn btn-primary" id="newGameBtn">🎲 NEW GAME</button>

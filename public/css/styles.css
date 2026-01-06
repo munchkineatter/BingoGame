@@ -464,6 +464,22 @@ body {
     box-shadow: 0 0 10px rgba(0, 125, 186, 0.3);
 }
 
+/* Range Info Display */
+.range-info {
+    text-align: center;
+    padding: 12px 20px;
+    background: var(--color-charcoal);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    color: var(--color-light-gray);
+    border: 1px solid #3a3a3a;
+}
+
+.range-info strong {
+    color: var(--color-gold);
+    font-family: var(--font-display);
+}
+
 /* Buttons */
 .btn {
     padding: 15px 30px;
