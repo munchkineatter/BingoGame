@@ -26,6 +26,10 @@ const modalTitle = document.getElementById('modalTitle');
 const modalMessage = document.getElementById('modalMessage');
 const modalCancel = document.getElementById('modalCancel');
 const modalConfirm = document.getElementById('modalConfirm');
+const scaleDownBtn = document.getElementById('scaleDownBtn');
+const scaleUpBtn = document.getElementById('scaleUpBtn');
+const scaleValue = document.getElementById('scaleValue');
+const scaleSlider = document.getElementById('scaleSlider');
 
 // Current game state
 let gameState = null;
@@ -76,6 +80,10 @@ function updateUI() {
     boardSizeSelect.value = gameState.boardSize;
     numberRangeMinInput.value = gameState.numberRangeMin;
     numberRangeMaxInput.value = gameState.numberRangeMax;
+    
+    // Update display scale
+    scaleValue.textContent = gameState.displayScale;
+    scaleSlider.value = gameState.displayScale;
     
     // Update range info display
     updateRangeInfo();
@@ -352,6 +360,27 @@ newGameBtn.addEventListener('click', startNewGame);
 // Update range info when inputs change
 numberRangeMinInput.addEventListener('input', updateRangeInfo);
 numberRangeMaxInput.addEventListener('input', updateRangeInfo);
+
+// Display scale controls
+scaleDownBtn.addEventListener('click', () => {
+    const newScale = Math.max(50, (gameState?.displayScale || 100) - 10);
+    socket.emit('updateDisplayScale', newScale);
+});
+
+scaleUpBtn.addEventListener('click', () => {
+    const newScale = Math.min(200, (gameState?.displayScale || 100) + 10);
+    socket.emit('updateDisplayScale', newScale);
+});
+
+scaleSlider.addEventListener('input', (e) => {
+    const newScale = parseInt(e.target.value);
+    scaleValue.textContent = newScale;
+});
+
+scaleSlider.addEventListener('change', (e) => {
+    const newScale = parseInt(e.target.value);
+    socket.emit('updateDisplayScale', newScale);
+});
 
 modalCancel.addEventListener('click', hideConfirmModal);
 

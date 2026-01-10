@@ -276,7 +276,9 @@ body {
     gap: 6px;
     align-content: start;
     overflow-y: auto;
-    padding: 5px;
+    overflow-x: hidden;
+    padding: 10px;
+    margin: 0 -5px;
 }
 
 .called-number {
@@ -291,24 +293,18 @@ body {
     font-size: 0.9rem;
     color: var(--color-white);
     border: 2px solid var(--color-blue);
-    animation: numberAppear 0.4s ease;
+    animation: numberAppear 0.3s ease;
 }
 
 .called-number.latest {
     background: var(--color-blue);
     border-color: var(--color-gold);
-    box-shadow: 0 0 15px var(--color-blue);
-    animation: latestPulse 1s ease infinite;
+    box-shadow: 0 0 10px var(--color-blue);
 }
 
 @keyframes numberAppear {
     from { transform: scale(0); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
-}
-
-@keyframes latestPulse {
-    0%, 100% { box-shadow: 0 0 15px var(--color-blue); }
-    50% { box-shadow: 0 0 30px var(--color-gold); }
 }
 
 /* Total Called Display */
@@ -612,6 +608,86 @@ body {
 .history-number:first-child {
     background: var(--color-gold);
     color: var(--color-charcoal);
+}
+
+/* Display Scale Control */
+.display-control-panel {
+    grid-column: 1 / -1;
+}
+
+.display-scale-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.btn-scale {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(145deg, var(--color-blue), #005a8a);
+    border-radius: 50%;
+}
+
+.btn-scale:hover {
+    transform: scale(1.1);
+}
+
+.scale-display {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    color: var(--color-gold);
+    min-width: 100px;
+    text-align: center;
+}
+
+.scale-slider-container {
+    padding: 0 20px;
+    margin-bottom: 10px;
+}
+
+.scale-slider-container input[type="range"] {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: var(--color-charcoal);
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.scale-slider-container input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--color-blue);
+    cursor: pointer;
+    border: 3px solid var(--color-gold);
+    box-shadow: 0 0 10px rgba(0, 125, 186, 0.5);
+}
+
+.scale-slider-container input[type="range"]::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--color-blue);
+    cursor: pointer;
+    border: 3px solid var(--color-gold);
+    box-shadow: 0 0 10px rgba(0, 125, 186, 0.5);
+}
+
+.scale-hint {
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
 }
 
 /* Boards Preview */

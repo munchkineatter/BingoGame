@@ -16,6 +16,7 @@ let gameState = {
     boardSize: 5,
     numberRangeMin: 1,
     numberRangeMax: 75,
+    displayScale: 100,
     calledNumbers: [],
     boards: [],
     winners: []
@@ -199,6 +200,12 @@ io.on('connection', (socket) => {
         gameState.numberRangeMin = settings.numberRangeMin || gameState.numberRangeMin;
         gameState.numberRangeMax = settings.numberRangeMax || gameState.numberRangeMax;
         generateAllBoards();
+        io.emit('gameState', gameState);
+    });
+    
+    // Handle display scale update (doesn't reset game)
+    socket.on('updateDisplayScale', (scale) => {
+        gameState.displayScale = Math.max(50, Math.min(200, scale));
         io.emit('gameState', gameState);
     });
     

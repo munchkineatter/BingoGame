@@ -61,15 +61,19 @@ function renderBoards(previousState) {
     // Calculate dynamic sizing based on board count and size
     const boardCount = gameState.boards.length;
     const boardSize = gameState.boardSize;
+    const displayScale = gameState.displayScale || 100;
     
     // Adjust cell size based on board size and count
-    let cellSize = 60;
+    let baseSize = 60;
     if (boardSize > 5) {
-        cellSize = Math.max(40, 60 - (boardSize - 5) * 5);
+        baseSize = Math.max(40, 60 - (boardSize - 5) * 5);
     }
     if (boardCount > 2) {
-        cellSize = Math.max(35, cellSize - (boardCount - 2) * 10);
+        baseSize = Math.max(35, baseSize - (boardCount - 2) * 10);
     }
+    
+    // Apply display scale
+    const cellSize = Math.round(baseSize * (displayScale / 100));
     
     gameState.boards.forEach((board, boardIndex) => {
         const boardElement = createBoardElement(board, boardIndex, cellSize, previousState);
