@@ -9,15 +9,6 @@
 </head>
 <body class="display-page">
     <div class="display-container">
-        <!-- Header -->
-        <header class="display-header">
-            <h1 class="title">🎰 CASINO BINGO 🎰</h1>
-            <div class="last-called">
-                <span class="label">LAST CALLED:</span>
-                <span class="number" id="lastCalledNumber">--</span>
-            </div>
-        </header>
-
         <!-- Main Content -->
         <main class="display-main">
             <!-- Bingo Boards Container -->
@@ -28,18 +19,18 @@
             <!-- Called Numbers Board -->
             <div class="called-numbers-section">
                 <h2>CALLED NUMBERS</h2>
+                <div class="last-called-display">
+                    <span class="label">LAST CALLED:</span>
+                    <span class="number" id="lastCalledNumber">--</span>
+                </div>
                 <div class="called-numbers-grid" id="calledNumbersGrid">
                     <!-- Called numbers will be displayed here -->
                 </div>
+                <div class="total-called">
+                    <span id="totalCalled">0</span> numbers called
+                </div>
             </div>
         </main>
-
-        <!-- Footer -->
-        <footer class="display-footer">
-            <div class="game-info">
-                <span id="totalCalled">0</span> numbers called
-            </div>
-        </footer>
     </div>
 
     <!-- Winner Overlay Template -->

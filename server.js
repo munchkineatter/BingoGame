@@ -29,12 +29,6 @@ function generateBoard(size) {
     const range = maxNum - minNum + 1;
     const usedNumbers = new Set();
     
-    // Calculate how many numbers we need (accounting for free space)
-    const cellsNeeded = size % 2 === 1 ? (size * size) - 1 : size * size;
-    
-    // If range is smaller than cells needed, we'll allow duplicates across boards
-    // but not within the same board
-    
     for (let row = 0; row < size; row++) {
         const rowNumbers = [];
         for (let col = 0; col < size; col++) {
@@ -47,7 +41,6 @@ function generateBoard(size) {
                 do {
                     num = Math.floor(Math.random() * range) + minNum;
                     attempts++;
-                    // If we've tried too many times (range too small), allow duplicates
                     if (attempts > range * 2) {
                         break;
                     }
