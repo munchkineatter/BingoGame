@@ -423,8 +423,8 @@ function updateCharts() {
             datasets: [{
                 label: 'Cumulative %',
                 data: cumulativeData,
-                backgroundColor: 'rgba(109, 51, 47, 0.3)',
-                borderColor: '#6d332f',
+                backgroundColor: 'rgba(23, 62, 80, 0.3)',
+                borderColor: '#173e50',
                 borderWidth: 2,
                 fill: true,
                 tension: 0.3

@@ -16,6 +16,10 @@ const totalCalled = document.getElementById('totalCalled');
 let gameState = null;
 let previousCalledNumbers = [];
 
+// Card suit symbols for stamps
+const CARD_SUITS = ['♠', '♦', '♥', '♣'];
+const SUIT_CLASSES = ['suit-spade', 'suit-diamond', 'suit-heart', 'suit-club'];
+
 // Connect to server
 socket.on('connect', () => {
     console.log('Connected to server');
@@ -125,6 +129,11 @@ function createBoardElement(board, boardIndex, cellSize, previousState) {
                 
                 if (cell.stamped) {
                     cellDiv.classList.add('stamped');
+                    
+                    // Assign a card suit based on the number (consistent per number)
+                    const suitIndex = cell.number % 4;
+                    cellDiv.classList.add(SUIT_CLASSES[suitIndex]);
+                    cellDiv.setAttribute('data-symbol', CARD_SUITS[suitIndex]);
                     
                     // Check if this is a newly stamped cell
                     const previousCell = previousBoard?.[rowIndex]?.[colIndex];

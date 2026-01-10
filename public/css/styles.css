@@ -1,14 +1,14 @@
 /* ========================================
    Casino Bingo Game - Styles
-   Colors: #007dba (blue), #6d332f (maroon), #212322 (charcoal)
+   Colors: #007dba (blue), #173e50 (teal), #212322 (charcoal), #fffffe (white)
    ======================================== */
 
 /* CSS Variables */
 :root {
     --color-blue: #007dba;
-    --color-maroon: #6d332f;
+    --color-teal: #173e50;
     --color-charcoal: #212322;
-    --color-white: #ffffff;
+    --color-white: #fffffe;
     --color-gold: #ffd700;
     --color-light-gray: #e0e0e0;
     --color-dark-gray: #1a1a1a;
@@ -19,7 +19,6 @@
     --shadow-strong: 0 10px 40px rgba(0, 0, 0, 0.5);
     --shadow-medium: 0 5px 20px rgba(0, 0, 0, 0.3);
     --shadow-glow-blue: 0 0 30px rgba(0, 125, 186, 0.5);
-    --shadow-glow-maroon: 0 0 30px rgba(109, 51, 47, 0.5);
 }
 
 /* Reset & Base */
@@ -127,9 +126,9 @@ body {
 }
 
 .bingo-cell.free-space {
-    background: linear-gradient(145deg, var(--color-maroon), #4a1a1a);
+    background: linear-gradient(145deg, var(--color-blue), #005a8a);
     font-size: 0.8rem;
-    color: var(--color-gold);
+    color: var(--color-white);
     font-weight: bold;
 }
 
@@ -138,18 +137,34 @@ body {
 }
 
 .bingo-cell.stamped::after {
-    content: '';
+    content: attr(data-symbol);
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 45px;
-    height: 45px;
-    background: radial-gradient(circle, var(--color-blue) 0%, var(--color-maroon) 100%);
-    border-radius: 50%;
+    font-size: 2.5rem;
     transform: translate(-50%, -50%) scale(0);
     animation: stampGrow 0.4s ease 0.1s forwards;
-    opacity: 0.9;
-    box-shadow: 0 0 15px var(--color-blue);
+    z-index: 5;
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.5));
+}
+
+/* Card suit colors - spades and clubs in white */
+.bingo-cell.stamped.suit-spade::after,
+.bingo-cell.stamped.suit-club::after {
+    color: var(--color-white);
+    text-shadow: 0 0 15px rgba(255, 255, 254, 0.5);
+}
+
+/* Hearts and diamonds in blue */
+.bingo-cell.stamped.suit-heart::after,
+.bingo-cell.stamped.suit-diamond::after {
+    color: var(--color-blue);
+    text-shadow: 0 0 15px rgba(0, 125, 186, 0.5);
+}
+
+/* Dim the number when stamped */
+.bingo-cell.stamped {
+    color: rgba(255, 255, 255, 0.3);
 }
 
 .bingo-cell.stamped.free-space::after {
@@ -163,9 +178,9 @@ body {
 }
 
 @keyframes stampGrow {
-    0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); }
-    50% { transform: translate(-50%, -50%) scale(1.2) rotate(180deg); }
-    100% { transform: translate(-50%, -50%) scale(1) rotate(360deg); }
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+    50% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
 }
 
 /* New stamp animation on number call */
@@ -225,7 +240,7 @@ body {
     border-radius: 15px;
     padding: 15px;
     box-shadow: var(--shadow-strong);
-    border: 3px solid var(--color-maroon);
+    border: 3px solid var(--color-blue);
     display: flex;
     flex-direction: column;
     width: 320px;
@@ -235,7 +250,7 @@ body {
 .called-numbers-section h2 {
     font-family: var(--font-display);
     font-size: 1.2rem;
-    color: var(--color-maroon);
+    color: var(--color-blue);
     text-align: center;
     margin-bottom: 10px;
     letter-spacing: 2px;
@@ -341,7 +356,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 20px 30px;
-    background: linear-gradient(90deg, var(--color-maroon), var(--color-blue));
+    background: linear-gradient(90deg, var(--color-teal), var(--color-blue));
     border-radius: 15px;
     margin-bottom: 20px;
     box-shadow: var(--shadow-strong);
@@ -402,7 +417,7 @@ body {
     color: var(--color-blue);
     margin-bottom: 20px;
     padding-bottom: 10px;
-    border-bottom: 2px solid var(--color-maroon);
+    border-bottom: 2px solid var(--color-teal);
 }
 
 /* Settings Panel */
@@ -495,16 +510,16 @@ body {
 }
 
 .btn-call {
-    background: linear-gradient(145deg, var(--color-maroon), #4a1a1a);
+    background: linear-gradient(145deg, var(--color-teal), #0d2530);
     color: var(--color-white);
-    box-shadow: 0 4px 15px rgba(109, 51, 47, 0.4);
+    box-shadow: 0 4px 15px rgba(23, 62, 80, 0.4);
     font-size: 1.2rem;
     padding: 15px 40px;
 }
 
 .btn-call:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(109, 51, 47, 0.6);
+    box-shadow: 0 6px 20px rgba(23, 62, 80, 0.6);
 }
 
 .btn-undo {
@@ -791,7 +806,7 @@ body {
 }
 
 .preview-cell.stamped {
-    background: var(--color-maroon);
+    background: var(--color-teal);
 }
 
 .preview-cell.free-space {
@@ -898,7 +913,7 @@ body {
 .progress-fill {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, var(--color-maroon), var(--color-blue));
+    background: linear-gradient(90deg, var(--color-teal), var(--color-blue));
     border-radius: 15px;
     transition: width 0.3s ease;
 }
@@ -1040,12 +1055,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--color-maroon);
+    background: var(--color-blue);
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-blue);
+    background: var(--color-teal);
 }
 
 /* Responsive Design */

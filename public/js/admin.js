@@ -309,10 +309,10 @@ function showNotification(message, type = 'info') {
     
     // Set colors based on type
     const colors = {
-        success: { bg: '#2d5a2d', border: '#44ff44' },
-        error: { bg: '#5a2d2d', border: '#ff4444' },
-        warning: { bg: '#5a4a2d', border: '#ffaa44' },
-        info: { bg: '#2d4a5a', border: '#007dba' }
+        success: { bg: '#1a4a3a', border: '#44cc88' },
+        error: { bg: '#173e50', border: '#66aacc' },
+        warning: { bg: '#3a4a2d', border: '#aacc44' },
+        info: { bg: '#173e50', border: '#007dba' }
     };
     
     const color = colors[type] || colors.info;
