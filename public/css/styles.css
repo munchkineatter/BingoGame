@@ -142,7 +142,7 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    font-size: 3.5rem;
+    font-size: 5rem;
     transform: translate(-50%, -50%) scale(0);
     animation: stampGrow 0.4s ease 0.1s forwards;
     z-index: 5;
@@ -153,6 +153,7 @@ body {
         0 0 3px var(--color-white),
         0 0 6px var(--color-white);
     paint-order: stroke fill;
+    line-height: 1;
 }
 
 /* All suits use blue fill with white outline */
