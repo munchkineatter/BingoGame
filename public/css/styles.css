@@ -690,6 +690,63 @@ body {
     font-size: 0.9rem;
 }
 
+/* Tools Panel */
+.tools-panel {
+    grid-column: 1 / -1;
+}
+
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+}
+
+.tool-link {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background: var(--color-charcoal);
+    border-radius: 12px;
+    border: 2px solid #3a3a3a;
+    text-decoration: none;
+    color: var(--color-white);
+    transition: all 0.3s ease;
+}
+
+.tool-link:hover {
+    border-color: var(--color-blue);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(0, 125, 186, 0.3);
+}
+
+.tool-icon {
+    font-size: 2.5rem;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(145deg, var(--color-blue), #005a8a);
+    border-radius: 12px;
+}
+
+.tool-info {
+    flex: 1;
+}
+
+.tool-name {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--color-blue);
+    margin-bottom: 5px;
+}
+
+.tool-desc {
+    font-size: 0.85rem;
+    color: #999;
+}
+
 /* Boards Preview */
 .boards-preview {
     display: flex;
@@ -800,6 +857,176 @@ body {
     display: flex;
     gap: 15px;
     justify-content: center;
+}
+
+/* ========================================
+   SIMULATOR PAGE STYLES
+   ======================================== */
+
+.simulator-page {
+    overflow-y: auto;
+}
+
+.simulator-main {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    flex: 1;
+}
+
+.sim-settings-panel {
+    grid-column: 1 / -1;
+}
+
+/* Progress Bar */
+.progress-panel {
+    grid-column: 1 / -1;
+}
+
+.progress-container {
+    margin-bottom: 15px;
+}
+
+.progress-bar {
+    height: 30px;
+    background: var(--color-charcoal);
+    border-radius: 15px;
+    overflow: hidden;
+    border: 2px solid #3a3a3a;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--color-maroon), var(--color-blue));
+    border-radius: 15px;
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-family: var(--font-display);
+    color: var(--color-light-gray);
+}
+
+.sim-status {
+    text-align: center;
+    padding: 10px;
+    color: var(--color-gold);
+    font-family: var(--font-display);
+}
+
+/* Results Grid */
+.results-panel {
+    grid-column: 1 / -1;
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.result-card {
+    background: var(--color-charcoal);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    border: 2px solid #3a3a3a;
+}
+
+.result-label {
+    font-size: 0.85rem;
+    color: var(--color-light-gray);
+    margin-bottom: 10px;
+}
+
+.result-value {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    color: var(--color-gold);
+}
+
+/* Chart Panels */
+.chart-panel {
+    min-height: 400px;
+}
+
+.chart-container {
+    height: 300px;
+    position: relative;
+}
+
+/* Percentile Info */
+.percentile-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #3a3a3a;
+}
+
+.percentile-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 15px;
+    background: var(--color-charcoal);
+    border-radius: 8px;
+}
+
+.percentile-label {
+    color: var(--color-light-gray);
+}
+
+.percentile-value {
+    font-family: var(--font-display);
+    color: var(--color-blue);
+}
+
+/* Data Table */
+.data-panel {
+    grid-column: 1 / -1;
+}
+
+.data-table-container {
+    max-height: 300px;
+    overflow-y: auto;
+    border-radius: 10px;
+    border: 2px solid #3a3a3a;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.data-table th,
+.data-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #3a3a3a;
+}
+
+.data-table th {
+    background: var(--color-charcoal);
+    color: var(--color-blue);
+    font-family: var(--font-display);
+    position: sticky;
+    top: 0;
+}
+
+.data-table tbody tr:hover {
+    background: rgba(0, 125, 186, 0.1);
+}
+
+.data-table .no-data {
+    text-align: center;
+    color: #666;
+    padding: 30px;
 }
 
 /* Scrollbar Styling */
