@@ -17,6 +17,7 @@ let gameState = {
     numberRangeMin: 1,
     numberRangeMax: 75,
     displayScale: 100,
+    winCondition: 'any', // 'any', 'row', 'column', 'diagonal', 'blackout'
     calledNumbers: [],
     boards: [],
     winners: []
@@ -65,50 +66,71 @@ function generateAllBoards() {
     gameState.winners = [];
 }
 
-// Check if a board has won
+// Check if a board has won based on win condition
 function checkWinner(board) {
     const size = board.length;
+    const winCondition = gameState.winCondition;
     
     // Check rows
-    for (let row = 0; row < size; row++) {
-        if (board[row].every(cell => cell.stamped)) {
-            return true;
-        }
-    }
-    
-    // Check columns
-    for (let col = 0; col < size; col++) {
-        let colWin = true;
+    const checkRows = () => {
         for (let row = 0; row < size; row++) {
-            if (!board[row][col].stamped) {
-                colWin = false;
-                break;
+            if (board[row].every(cell => cell.stamped)) {
+                return true;
             }
         }
-        if (colWin) return true;
-    }
+        return false;
+    };
     
-    // Check diagonal (top-left to bottom-right)
-    let diag1Win = true;
-    for (let i = 0; i < size; i++) {
-        if (!board[i][i].stamped) {
-            diag1Win = false;
-            break;
+    // Check columns
+    const checkColumns = () => {
+        for (let col = 0; col < size; col++) {
+            let colWin = true;
+            for (let row = 0; row < size; row++) {
+                if (!board[row][col].stamped) {
+                    colWin = false;
+                    break;
+                }
+            }
+            if (colWin) return true;
         }
-    }
-    if (diag1Win) return true;
+        return false;
+    };
     
-    // Check diagonal (top-right to bottom-left)
-    let diag2Win = true;
-    for (let i = 0; i < size; i++) {
-        if (!board[i][size - 1 - i].stamped) {
-            diag2Win = false;
-            break;
+    // Check diagonals
+    const checkDiagonals = () => {
+        let diag1Win = true;
+        let diag2Win = true;
+        for (let i = 0; i < size; i++) {
+            if (!board[i][i].stamped) diag1Win = false;
+            if (!board[i][size - 1 - i].stamped) diag2Win = false;
         }
-    }
-    if (diag2Win) return true;
+        return diag1Win || diag2Win;
+    };
     
-    return false;
+    // Check blackout (all cells stamped)
+    const checkBlackout = () => {
+        for (let row = 0; row < size; row++) {
+            for (let col = 0; col < size; col++) {
+                if (!board[row][col].stamped) return false;
+            }
+        }
+        return true;
+    };
+    
+    // Check based on win condition
+    switch (winCondition) {
+        case 'row':
+            return checkRows();
+        case 'column':
+            return checkColumns();
+        case 'diagonal':
+            return checkDiagonals();
+        case 'blackout':
+            return checkBlackout();
+        case 'any':
+        default:
+            return checkRows() || checkColumns() || checkDiagonals();
+    }
 }
 
 // Mark number on all boards
@@ -187,6 +209,7 @@ io.on('connection', (socket) => {
             gameState.boardSize = settings.boardSize || gameState.boardSize;
             gameState.numberRangeMin = settings.numberRangeMin || gameState.numberRangeMin;
             gameState.numberRangeMax = settings.numberRangeMax || gameState.numberRangeMax;
+            gameState.winCondition = settings.winCondition || gameState.winCondition;
         }
         generateAllBoards();
         io.emit('gameState', gameState);

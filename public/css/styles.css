@@ -426,6 +426,10 @@ body {
     margin-bottom: 20px;
 }
 
+.setting-group.full-width {
+    grid-column: 1 / -1;
+}
+
 .setting-group {
     display: flex;
     flex-direction: column;

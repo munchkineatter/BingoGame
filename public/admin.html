@@ -54,6 +54,16 @@
                         <label for="numberRangeMax">Number Range (Max):</label>
                         <input type="number" id="numberRangeMax" value="75" min="1" max="999">
                     </div>
+                    <div class="setting-group full-width">
+                        <label for="winCondition">Win Condition:</label>
+                        <select id="winCondition">
+                            <option value="any">Any Line (Row, Column, or Diagonal)</option>
+                            <option value="row">Row Only</option>
+                            <option value="column">Column Only</option>
+                            <option value="diagonal">Diagonal Only</option>
+                            <option value="blackout">Blackout (Full Card)</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="range-info" id="rangeInfo">
                     Numbers will be between <strong>1</strong> and <strong>75</strong>

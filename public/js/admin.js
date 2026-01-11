@@ -13,6 +13,7 @@ const boardSizeSelect = document.getElementById('boardSize');
 const numberRangeMinInput = document.getElementById('numberRangeMin');
 const numberRangeMaxInput = document.getElementById('numberRangeMax');
 const rangeInfo = document.getElementById('rangeInfo');
+const winConditionSelect = document.getElementById('winCondition');
 const newGameBtn = document.getElementById('newGameBtn');
 const numberInput = document.getElementById('numberInput');
 const callBtn = document.getElementById('callBtn');
@@ -80,6 +81,7 @@ function updateUI() {
     boardSizeSelect.value = gameState.boardSize;
     numberRangeMinInput.value = gameState.numberRangeMin;
     numberRangeMaxInput.value = gameState.numberRangeMax;
+    winConditionSelect.value = gameState.winCondition || 'any';
     
     // Update display scale
     scaleValue.textContent = gameState.displayScale;
@@ -233,6 +235,7 @@ function startNewGame() {
     const boardSize = parseInt(boardSizeSelect.value);
     const numberRangeMin = parseInt(numberRangeMinInput.value) || 1;
     const numberRangeMax = parseInt(numberRangeMaxInput.value) || 75;
+    const winCondition = winConditionSelect.value;
     
     // Validate range
     if (numberRangeMin >= numberRangeMax) {
@@ -252,15 +255,25 @@ function startNewGame() {
         showNotification(`Warning: Range (${rangeSize} numbers) is smaller than total cells (${cellsNeeded}). Some numbers may repeat.`, 'warning');
     }
     
+    // Get win condition display name
+    const winConditionNames = {
+        'any': 'Any Line',
+        'row': 'Row Only',
+        'column': 'Column Only',
+        'diagonal': 'Diagonal Only',
+        'blackout': 'Blackout'
+    };
+    
     showConfirmModal(
         'Start New Game',
-        `Start a new game with ${boardCount} board(s) of size ${boardSize}x${boardSize}? Numbers will range from ${numberRangeMin} to ${numberRangeMax}. This will clear all current progress.`,
+        `Start a new game with ${boardCount} board(s) of size ${boardSize}x${boardSize}? Win condition: ${winConditionNames[winCondition]}. This will clear all current progress.`,
         () => {
             socket.emit('newGame', {
                 boardCount: boardCount,
                 boardSize: boardSize,
                 numberRangeMin: numberRangeMin,
-                numberRangeMax: numberRangeMax
+                numberRangeMax: numberRangeMax,
+                winCondition: winCondition
             });
         }
     );
